@@ -1,12 +1,15 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import { Container } from 'reactstrap'
+import Routes from './routes'
+import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      Learning the MERN Stack
-    </div>
-  );
+    <Container>
+      <h1>DBCS Parts Test</h1>
+      <Routes />
+    </Container>
+  )
 }
 
-export default App;
+export default App
