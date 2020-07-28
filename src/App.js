@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   return (
     <Container>
-      <h1>DBCS Parts Test</h1>
+      <h1>DBCS Parts</h1>
       <Routes />
     </Container>
   )
