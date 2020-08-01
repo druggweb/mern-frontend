@@ -22,6 +22,6 @@ label#thumbnail.has-thumbnail img {
   display: none;
 }
 
-.container>.event-validation {
+.container >.event-validation {
   margin-top: 12px;
 }

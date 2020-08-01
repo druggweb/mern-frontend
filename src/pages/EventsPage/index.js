@@ -4,7 +4,6 @@ import { Container, Form, FormGroup, Input, Label, Button, Alert } from 'reactst
 import cameraIcon from '../../assets/camera.png'
 import "./events.css"
 
-// EventsPage will show all the events
 export default function EventsPage() {
   const [stock, setStock] = useState('')
   const [description, setDescription] = useState('')
@@ -17,8 +16,6 @@ export default function EventsPage() {
   const preview = useMemo(() => {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail])
-
-  // console.log(noun, stock, location, description)
 
   const submitHandler = async (evt) => {
     evt.preventDefault()

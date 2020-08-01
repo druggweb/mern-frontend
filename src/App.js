@@ -6,8 +6,10 @@ import './App.css'
 function App() {
   return (
     <Container>
-      <h2>DBCS Parts</h2>
-      <Routes />
+      <h1>DBCS Parts</h1>
+      <div className="content">
+        <Routes />
+      </div>
     </Container>
   )
 }
