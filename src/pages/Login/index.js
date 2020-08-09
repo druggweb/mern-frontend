@@ -16,7 +16,7 @@ export default function Login({ history }) {
     try {
       if (userId) {
         localStorage.setItem('user', userId)
-        history.push('/dashboard')
+        history.push('/')
       } else {
         const { message } = response.data
         setError(true)
@@ -24,10 +24,11 @@ export default function Login({ history }) {
         setTimeout(() => {
           setError(false)
           setErrorMessage("")
-        }, 2000)
+        }, 3000)
       }
     } catch (error) {
-      
+      setError(true)
+      setErrorMessage("Error, the server returned an error")
     }
   }
 
@@ -38,10 +39,10 @@ export default function Login({ history }) {
       <Form onSubmit={handleSubmit}>
         <div className="input-group">
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Input type="email" name="email" id="email" placeholder="Your email" onChange={evt => setEmail(evt.target.value)}/>
+          <Input type="email" name="email" id="email" placeholder="email" onChange={evt => setEmail(evt.target.value)}/>
         </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Input type="password" name="password" id="password" placeholder="Your password" onChange={evt => setPassword(evt.target.value)}/>
+          <Input type="password" name="password" id="password" placeholder="password" onChange={evt => setPassword(evt.target.value)}/>
         </FormGroup>
         </div>
         <FormGroup>
@@ -52,7 +53,7 @@ export default function Login({ history }) {
         </FormGroup>
       </Form>
       { error ? (
-        <Alert className="event-validation" color="danger"> Missing required information</Alert>
+        <Alert className="event-validation" color="danger">{errorMessage}</Alert>
       ) : "" }
     </Container>
   )
