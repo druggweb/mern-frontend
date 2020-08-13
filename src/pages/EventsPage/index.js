@@ -6,7 +6,7 @@ import cameraIcon from '../../assets/camera.png'
 import "./events.css"
 
 export default function EventsPage({ history }) {
-  const [machine, setMachine] = useState('')
+  const [machine, setMachine] = useState('Machine')
   const [stock, setStock] = useState('')
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
@@ -38,7 +38,7 @@ export default function EventsPage({ history }) {
     eventData.append("date", date)
 
     try {
-      if (machine !== "" &&
+      if (machine !== "Machine" &&
         stock !== "" &&
         description !== "" &&
         location !== "" &&
@@ -64,6 +64,9 @@ export default function EventsPage({ history }) {
     }  
   }
 
+  const machineEventHandler = (machine) => setMachine(machine)
+  //console.log(machine)
+  
   return (
     <Container>
       <h3>Add a Part</h3>
@@ -77,28 +80,31 @@ export default function EventsPage({ history }) {
             </Label>
           </FormGroup>
           <FormGroup>
-            <Label>Machine: </Label>
-            <Input id="machine" type="text" value={machine} placeholder={'machine type'} onChange={(evt) => setMachine(evt.target.value)}/>
-          </FormGroup>
-          <FormGroup>
-            <Label>Nomenclature: </Label>
             <Input id="noun" type="text" value={noun} placeholder={'name of part'} onChange={(evt) => setNoun(evt.target.value)}/>
           </FormGroup>
           <FormGroup>
-            <Label>Stock Number: </Label>
-            <Input id="stock" type="text" value={stock} placeholder={'stock number'} onChange={ (evt) => setStock(evt.target.value)}/>
+            <Input id="stock" type="text" value={stock} placeholder={'stock number'} onChange={(evt) => setStock(evt.target.value)}/>
           </FormGroup>
           <FormGroup>
-            <Label>Location: </Label>
-            <Input id="location" type="text" value={location} placeholder={'location'} onChange={ (evt) => setLocation(evt.target.value)}/>
+            <Input id="location" type="text" value={location} placeholder={'location'} onChange={(evt) => setLocation(evt.target.value)}/>
           </FormGroup>
           <FormGroup>
-            <Label>Description: </Label>
-            <Input id="description" type="text" value={description} placeholder={'description'} onChange={ (evt) => setDescription(evt.target.value)}/>
+            <Input id="description" type="text" value={description} placeholder={'description'} onChange={(evt) => setDescription(evt.target.value)}/>
           </FormGroup>
           <FormGroup>
-            <Label>Date: </Label>
             <Input id="date" type="date" value={date} onChange={ (evt) => setDate(evt.target.value)}/>
+          </FormGroup>
+          <FormGroup>
+            <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+              <Button id="caret" value={machine} disabled>{machine}</Button>
+              <DropdownToggle caret />
+              <DropdownMenu>
+                <DropdownItem onClick={() => machineEventHandler('DBCS')}>DBCS</DropdownItem>
+                <DropdownItem onClick={() => machineEventHandler('DBCS-6')}>DBCS-6</DropdownItem>
+                <DropdownItem onClick={() => machineEventHandler('DIOSS-C')}>DIOSS-C</DropdownItem>
+                <DropdownItem onClick={() => machineEventHandler('DIOSS-B')}>DIOSS-B</DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
           </FormGroup>
         </div>
         <FormGroup>
@@ -107,7 +113,7 @@ export default function EventsPage({ history }) {
           </Button>
         </FormGroup>
         <FormGroup>
-          <Button className="secondary-btn" onClick={ () => history.push("/dashboard") }>
+          <Button className="secondary-btn" onClick={() => history.push("/")}>
             Dashboard
           </Button>
         </FormGroup>

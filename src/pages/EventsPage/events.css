@@ -25,3 +25,7 @@ label#thumbnail.has-thumbnail img {
 .container >.event-validation {
   margin-top: 12px;
 }
+
+#dropdown {
+  align-content: center;
+}
