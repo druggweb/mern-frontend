@@ -50,7 +50,8 @@ export default function EventsPage({ history }) {
         setSuccess(true)
         setTimeout(() => {
           setSuccess(false)
-        }, 4000)
+          history.push("/")
+        }, 2000)
 
       } else {
         setError(true)
@@ -66,7 +67,7 @@ export default function EventsPage({ history }) {
 
   const machineEventHandler = (machine) => setMachine(machine)
   //console.log(machine)
-  
+
   return (
     <Container>
       <h3>Add a Part</h3>
@@ -114,7 +115,7 @@ export default function EventsPage({ history }) {
         </FormGroup>
         <FormGroup>
           <Button className="secondary-btn" onClick={() => history.push("/")}>
-            Dashboard
+            Cancel
           </Button>
         </FormGroup>
       </Form>
