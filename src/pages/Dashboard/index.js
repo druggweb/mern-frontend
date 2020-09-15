@@ -2,15 +2,19 @@ import React, {useEffect, useState} from 'react'
 import api from '../../services/api'
 import moment from 'moment'
 import './dashboard.css'
-import { Button, ButtonGroup, Alert } from 'reactstrap';
+import { Button, Alert, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 export default function Dashboard({history}) {
   const [events, setEvents] = useState([])
   const user = localStorage.getItem('user')
   const user_id = localStorage.getItem('user_id')
+
   const [rSelected, setRSelected] = useState(null)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [dropdownOpen, setDropDownOpen] = useState(false)
+
+  const toggle = () => setDropDownOpen(!dropdownOpen)
 
   useEffect(() => {
     getEvents()
@@ -60,28 +64,24 @@ export default function Dashboard({history}) {
     }
   }
 
-  const logoutHandler = () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('user_id')
-    history.push('/login')
-  }
-
   return (
     <>
       <div className="filter-panel">
-        <ButtonGroup>
-          <Button color="primary" onClick={ () => filterHandler(null) } active={ rSelected === null }>All Machines</Button>
-          <Button color="primary" onClick={myPartsHandler} active={ rSelected === 'myparts' }>My Parts</Button>
-          <Button color="primary" onClick={ () => filterHandler("DBCS") } active={ rSelected === 'DBCS' }>DBCS</Button>
-          <Button color="primary" onClick={ () => filterHandler("DBCS-6") } active={ rSelected === 'DBCS-6' }>DBCS-6</Button>
-          <Button color="primary" onClick={ () => filterHandler("DIOSS-C") } active={ rSelected === 'DIOSS-C' }>DIOSS-C</Button>
-          <Button color="primary" onClick={ () => filterHandler('DIOSS-B') } active={ rSelected === 'DIOSS-B' }>DIOSS-B</Button>
-        </ButtonGroup>
-        <ButtonGroup>
-          <Button color="secondary" onClick={ () => history.push('events') }>Add Part</Button>
-          <Button color="danger" onClick={logoutHandler}>Logout</Button>
-        </ButtonGroup>
+        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <DropdownToggle color="primary" caret>
+            Filter
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={() => filterHandler(null)} active={rSelected === null}>All Machines</DropdownItem>
+            <DropdownItem onClick={myPartsHandler} active={rSelected === 'myparts'}>My Parts</DropdownItem>
+            <DropdownItem onClick={() => filterHandler("DBCS")} active={rSelected === 'DBCS'}>DBCS</DropdownItem>
+            <DropdownItem onClick={() => filterHandler("DBCS-6")} active={rSelected === 'DBCS-6'}>DBCS-6</DropdownItem>
+            <DropdownItem onClick={() => filterHandler("DIOSS-C")} active={rSelected === 'DIOSS-C'}>DIOSS-C</DropdownItem>
+            <DropdownItem onClick={() => filterHandler('DIOSS-B')} active={rSelected === 'DIOSS-B'}>DIOSS-B</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
+
       <ul className="events-list">
         {events.map(event => (
           <li key={event._id}>
@@ -98,6 +98,7 @@ export default function Dashboard({history}) {
           </li>
         )) }
       </ul>
+
       {error ? (
         <Alert className="event-validation" color="danger"> Error deleting event!</Alert>
       ) : ""}
