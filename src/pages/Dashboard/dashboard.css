@@ -30,7 +30,7 @@ ul.events-list li strong {
 div.filter-panel {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  padding-left: 15px;
 }
 
 ul.events-list header div {

@@ -68,7 +68,7 @@ export default function Dashboard({history}) {
     <>
       <div className="filter-panel">
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-          <DropdownToggle color="primary" caret>
+          <DropdownToggle outline color="secondary" caret>
             Filter
           </DropdownToggle>
           <DropdownMenu>
@@ -86,7 +86,7 @@ export default function Dashboard({history}) {
         {events.map(event => (
           <li key={event._id}>
             <header style={{ backgroundImage: `url(${event.thumbnail_url})` }}>
-              {event.user === user_id ? <div><Button color="danger" size="sm" onClick={() => deleteEventHandler(event._id)}>
+              {event.user === user_id ? <div><Button color="secondary" size="sm" onClick={() => deleteEventHandler(event._id)}>
               Delete</Button></div> : ""}
             </header>
             <strong>{event.noun}</strong>

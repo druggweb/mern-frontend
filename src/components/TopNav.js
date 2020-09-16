@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react'
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap'
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavbarBrand, NavbarText, NavLink } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../user-context'
 
 const TopNav = () => {
-  const {isLoggedIn, setIsloggedIn} = useContext(UserContext)
+  const { isLoggedIn, setIsloggedIn } = useContext(UserContext)
 
-  const [collapsed, setCollapsed] = useState(true)
-  const toggleNavbar = () => setCollapsed(!collapsed)
+  const [isOpen, setIsOpen] = useState(false)
+  const toggle = () => setIsOpen(!isOpen)
 
   const logoutHandler = () => {
     localStorage.removeItem('user')
@@ -17,22 +17,25 @@ const TopNav = () => {
 
   return isLoggedIn ?
     <div>
-      <Navbar color="faded" light>
-        <NavbarToggler onClick={toggleNavbar} />
-        <Link to="/login" onClick={logoutHandler}>Logout</Link>
-        <Collapse isOpen={!collapsed} navbar>
-          <Nav navbar>
+      <Navbar color="faded" light expand="md">
+        <NavbarBrand href="/">DBCS Parts</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
             <NavItem>
-              <Link to="/events">Add Part</Link>
+              <NavLink href="/events">Add Part</NavLink>
             </NavItem>
             <NavItem>
-              <Link to="/">Dashboard</Link>
+              <NavLink href="/">Dashboard</NavLink>
             </NavItem>
           </Nav>
+          <NavbarText>
+            <Link to="/login" onClick={logoutHandler}>Logout</Link>
+          </NavbarText>
         </Collapse>
       </Navbar>
     </div>
-  : ""
+    : ""
 }
 
 export default TopNav
