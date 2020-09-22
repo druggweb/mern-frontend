@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import api from '../../services/api'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import './dashboard.css'
 import { Button, Alert, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
@@ -54,7 +54,7 @@ export default function Dashboard({history}) {
       setTimeout(() => {
         setSuccess(false)
         filterHandler(null)
-      }, 2500)
+      }, 2000)
 
     } catch (error) {
       setError(true)
@@ -68,7 +68,7 @@ export default function Dashboard({history}) {
     <>
       <div className="filter-panel">
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-          <DropdownToggle outline color="secondary" caret>
+          <DropdownToggle outline color="dark" caret>
             Filter
           </DropdownToggle>
           <DropdownMenu>
@@ -78,6 +78,7 @@ export default function Dashboard({history}) {
             <DropdownItem onClick={() => filterHandler("DBCS-6")} active={rSelected === 'DBCS-6'}>DBCS-6</DropdownItem>
             <DropdownItem onClick={() => filterHandler("DIOSS-C")} active={rSelected === 'DIOSS-C'}>DIOSS-C</DropdownItem>
             <DropdownItem onClick={() => filterHandler('DIOSS-B')} active={rSelected === 'DIOSS-B'}>DIOSS-B</DropdownItem>
+            <DropdownItem onClick={() => filterHandler('AFSM-100')} active={rSelected === 'AFSM-100'}>AFSM-100</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>
@@ -85,7 +86,7 @@ export default function Dashboard({history}) {
       <ul className="events-list">
         {events.map(event => (
           <li key={event._id}>
-            <header style={{ backgroundImage: `url(${event.thumbnail_url})` }}>
+            <header>
               {event.user === user_id ? <div><Button color="secondary" size="sm" onClick={() => deleteEventHandler(event._id)}>
               Delete</Button></div> : ""}
             </header>
@@ -94,7 +95,8 @@ export default function Dashboard({history}) {
             <span>Stock Number: {event.stock}</span>
             <span>Location: {event.location}</span>
             <span>Description: {event.description}</span>
-            <span>Updated: {moment(event.date).format('l')}</span>
+            <span>Updated: {dayjs(event.date).add(1, 'day').format('ddd. MMM D, YYYY')} </span>
+            <hr/>
           </li>
         )) }
       </ul>

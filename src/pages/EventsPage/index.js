@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import api from '../../services/api'
-import {Container, Form, FormGroup, Input, Label, Button, Alert, 
+import {Container, Form, FormGroup, Input, Button, Alert, 
   DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown} from 'reactstrap'
-import cameraIcon from '../../assets/camera.png'
 import "./events.css"
 
 export default function EventsPage({ history }) {
@@ -10,7 +9,6 @@ export default function EventsPage({ history }) {
   const [stock, setStock] = useState('')
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
-  const [thumbnail, setThumbnail] = useState(null)
   const [noun, setNoun] = useState('')
   const [date, setDate] = useState('')
   const [error, setError] = useState(false)
@@ -25,10 +23,6 @@ export default function EventsPage({ history }) {
 
   const toggle = () => setOpen(!dropdownOpen)
 
-  const preview = useMemo(() => {
-    return thumbnail ? URL.createObjectURL(thumbnail) : null;
-  }, [thumbnail])
-
   const submitHandler = async (evt) => {
     evt.preventDefault()
 
@@ -38,7 +32,6 @@ export default function EventsPage({ history }) {
     eventData.append("stock", stock)
     eventData.append("description", description)
     eventData.append("location", location)
-    eventData.append("thumbnail", thumbnail)
     eventData.append("noun", noun)
     eventData.append("date", date)
 
@@ -48,8 +41,7 @@ export default function EventsPage({ history }) {
         description !== "" &&
         location !== "" &&
         noun !== "" &&
-        date !== "" &&
-        thumbnail !== null
+        date !== null
       ) {
         await api.post("/event", eventData, { headers: { user } })
         setSuccess(true)
@@ -78,13 +70,7 @@ export default function EventsPage({ history }) {
       <h3>Add a Part</h3>
       <Form onSubmit={submitHandler}>
         <div className="input-group">
-          <FormGroup>
-            <Label>Upload Image: </Label>
-            <Label id='thumbnail' style={{backgroundImage: `url(${preview})` }} className={thumbnail ? 'has-thumbnail' : ''}>
-            <Input type="file" onChange={(evt) => setThumbnail(evt.target.files[0])} />
-            <img src={ cameraIcon} style={{ maxWidth: "50px" }} alt="upload icon" />
-            </Label>
-          </FormGroup>
+          
           <FormGroup>
             <Input id="noun" type="text" value={noun} placeholder={'name of part'} onChange={(evt) => setNoun(evt.target.value)}/>
           </FormGroup>
@@ -109,6 +95,7 @@ export default function EventsPage({ history }) {
                 <DropdownItem onClick={() => machineEventHandler('DBCS-6')}>DBCS-6</DropdownItem>
                 <DropdownItem onClick={() => machineEventHandler('DIOSS-C')}>DIOSS-C</DropdownItem>
                 <DropdownItem onClick={() => machineEventHandler('DIOSS-B')}>DIOSS-B</DropdownItem>
+                <DropdownItem onClick={() => machineEventHandler('AFSM-100')}>AFSM-100</DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
           </FormGroup>

@@ -18,7 +18,7 @@ const TopNav = () => {
   return isLoggedIn ?
     <div>
       <Navbar color="faded" light expand="md">
-        <NavbarBrand href="/">DBCS Parts</NavbarBrand>
+        <NavbarBrand href="/">Mail Processing Parts</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
